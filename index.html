@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Babel RPC by babelrpc</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Babel RPC</h1>
+      <h2 class="project-tagline">An RPC framework using JSON over HTTP</h2>
+    </section>
+
+    <section class="main-content">
+      <p><img src="media/logo.png" alt="Babel"></p>
+
+<p>Babel is an IDL parser and RPC framework using JSON over HTTP. IDL files describe models and web services. The babel tool allows you to generate client and server code in multiple languages from the IDL file.</p>
+
+<h2>
+<a id="supported-languages" class="anchor" href="#supported-languages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Supported Languages</h2>
+
+<ul>
+<li><a href="csharp.md">C#</a></li>
+<li><a href="java.md">Java</a></li>
+<li><a href="testharness">Test Harness</a></li>
+<li>
+<a href="asp.md">ASP</a> (client only)</li>
+</ul>
+
+<h3>
+<a id="future-support" class="anchor" href="#future-support" aria-hidden="true"><span class="octicon octicon-link"></span></a>Future support</h3>
+
+<ul>
+<li>Objective-C/iOS (client only)</li>
+<li>Python</li>
+<li>Ruby</li>
+<li>Go</li>
+<li>JavaScript</li>
+<li>PHP</li>
+</ul>
+
+<h1>
+<a id="babel-syntax" class="anchor" href="#babel-syntax" aria-hidden="true"><span class="octicon octicon-link"></span></a>Babel Syntax</h1>
+
+<p>Babel's syntax should be familar to most programmers using C-like or JavaScript-like languages.</p>
+
+<h2>
+<a id="the-babel-idl-file" class="anchor" href="#the-babel-idl-file" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Babel IDL File</h2>
+
+<p>A Babel file consists of a header and defintions. The header includes <code>import</code> and <code>namespace</code> statements. The rest of the file consists of <code>const</code>, <code>enum</code>, <code>struct</code>, and <code>service</code> declarations.</p>
+
+<p>In general, the format is C-like. In most objects, a comma or semicolon is accepted as a separator, but isn't required.</p>
+
+<p>In general, the parse tree of the IDL maintains the order of the items in the original IDL file.</p>
+
+<h3>
+<a id="comments" class="anchor" href="#comments" aria-hidden="true"><span class="octicon octicon-link"></span></a>Comments</h3>
+
+<p>Ordinary comments are ignored by the parser.</p>
+
+<pre><code>// This is a comment
+/* so is this */
+</code></pre>
+
+<h3>
+<a id="documenation-comments" class="anchor" href="#documenation-comments" aria-hidden="true"><span class="octicon octicon-link"></span></a>Documenation Comments</h3>
+
+<p>Documentation comments may appear <em>before</em> a <code>const</code>, <code>enum</code>, <code>struct</code>, or <code>service</code> definition. They may also be used before field and method definitions, and at the top of the babel file.</p>
+
+<pre><code>/// This is a documentation comment
+/** So is this */
+</code></pre>
+
+<p>Documentation comments are written to the output files in a format appropriate for the language. File-level documentation comments (at the top of the babel file) are written to each generated output file. This is a good place to put overview or copyright information.</p>
+
+<p>Make sure documentation comments are <em>awesome</em> for best results! They are placed into the generated code and any UIs we build for documentation purposes.</p>
+
+<h3>
+<a id="data-types" class="anchor" href="#data-types" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Types</h3>
+
+<p>Babel supports various primitive data types. <em>Try to avoid types with a language-specific behavior unless you really know what you are doing.</em></p>
+
+<table>
+<thead><tr>
+<th>IDL type</th>
+<th>Examples (JSON)</th>
+<th>Description</th>
+<th>Range</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>bool</td>
+<td>false, true</td>
+<td>Boolean</td>
+<td>false, true</td>
+</tr>
+<tr>
+<td>byte</td>
+<td>0, 1, ...</td>
+<td>Unsigned 8-bit integer</td>
+<td>
+<b>Warning: Language-specific behavior!</b><br>
+0 to 255<br>
+Java: 0 to 127</td>
+</tr>
+<tr>
+<td>int8</td>
+<td>-1, 0, 1, ...</td>
+<td>Signed 8-bit integer</td>
+<td>-128 to 127</td>
+</tr>
+<tr>
+<td>int16</td>
+<td>-1, 0, 1, ...</td>
+<td>Signed 16-bit integer</td>
+<td>-32,768 to 32,767</td>
+</tr>
+<tr>
+<td>int32</td>
+<td>-1, 0, 1, ...</td>
+<td>Signed 32-bit integer</td>
+<td>-2,147,483,648 to 2,147,483,647</td>
+</tr>
+<tr>
+<td>int64</td>
+<td>"-1", "0", "1", ...</td>
+<td>Signed 64-bit integer</td>
+<td>-9,223,372,036,854,775,808 to 9,223,372,036,854,775,807</td>
+</tr>
+<tr>
+<td>float32</td>
+<td>3.14</td>
+<td>Floating point with 32-bit precision</td>
+<td>-3.402823e38 to 3.402823e38</td>
+</tr>
+<tr>
+<td>float64</td>
+<td>3.14159</td>
+<td>Floating point with 64-bit precision</td>
+<td>-1.79769313486232e308 to 1.79769313486232e308</td>
+</tr>
+<tr>
+<td>string</td>
+<td>"\thello, world"</td>
+<td>String, assumed to be UTF-8 or Unicode capable</td>
+<td>0 to any number of characters</td>
+</tr>
+<tr>
+<td>datetime</td>
+<td>"2013-09-09T13:44:22.341-05:00"<br>"2013-09-09T18:44:22.341Z"</td>
+<td>Date-time type. (Date constants are not supported.)</td>
+<td>Specific range outside of 1980s and up varies by language</td>
+</tr>
+<tr>
+<td>decimal</td>
+<td>"3.2415"</td>
+<td>128-bit decimal data type (Decimal constants are not supported.)</td>
+<td>
+<b>Warning: Language-specific behavior!</b><br>
+ASP: -922,337,203,685,477.5808 to 922,337,203,685,477.5807
+.Net: ±1.0×10e-28 to ±7.9×10e28<br>
+Java: <br>
+Other: Represented as a string</td>
+</tr>
+<tr>
+<td>char</td>
+<td>"\r", "A"</td>
+<td>Single character, assumed to be UTF-8 or Unicode capable</td>
+<td>Single character</td>
+</tr>
+<tr>
+<td>binary</td>
+<td>"YXNhZGFzZAo="</td>
+<td>Binary data stored in byte arrays (based64 encoded string)</td>
+<td>0 bytes to any number of bytes</td>
+</tr>
+</tbody>
+</table>
+
+<p>Primitive are generally nullable (i.e. optional). Initializers may be used to ensure that a field has a default value.</p>
+
+<p>Finaly, the <code>binary</code> type is used to represent binary data stored in byte arrays. It serializes more efficiently than a list of bytes.</p>
+
+<p>(Also see <a href="langissues.md">Language-Specific Issues</a> and <a href="JSON.md">About JSON</a>.)</p>
+
+<h4>
+<a id="containers" class="anchor" href="#containers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Containers</h4>
+
+<p>Maps and lists may be defined.</p>
+
+<p>An list can contain primitive types or complex types defined by a <code>struct</code>. Lists may contain null values.</p>
+
+<p>A map's key can only contain primitive types, but the value can contain any type. Null keys are not supported. Values set to null are not guaranteed to be preserved across the wire.</p>
+
+<table>
+<thead><tr>
+<th>IDL type</th>
+<th>Examples</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>list</td>
+<td>list&lt;int32&gt;<br>list&lt;Foo&gt;<br>list&lt;list&lt;string&gt;&gt;</td>
+<td>A list of values</td>
+</tr>
+<tr>
+<td>map</td>
+<td>map&lt;int32,string&gt;<br>map&lt;string,Foo&gt;<br>map&lt;string,list&lt;int32&gt;&gt;</td>
+<td>A map or dictionary</td>
+</tr>
+</tbody>
+</table>
+
+<h4>
+<a id="initializers-defaults" class="anchor" href="#initializers-defaults" aria-hidden="true"><span class="octicon octicon-link"></span></a>Initializers (Defaults)</h4>
+
+<p>In the data model generated for any given language, maps and lists are automatically initialized to an empty, non-null container. Manually nulling out a container will cause Babel's Protocol (serialization) layer to generate an exception.</p>
+
+<p>Initializing primitive types has the simple effect of a constructor initializing the value. Because Babel's types are all nullable, this helps ensure that callers do the right thing. However, the server code should still check for null in its validation step.</p>
+
+<p>That being said, when a field is nulled out but has a default value, the server will still see the default value. This is because the JSON (and other protocols) tend to minimize the data sent via the transport. If a field is null, it is not sent over the wire.</p>
+
+<p>When the server parses the JSON, the model is initialized. Since the JSON doesn't contain a definition for the null field, it is never assigned and the default value is used. Think of initializers as a way to set a default value.</p>
+
+<p><b>NOTE - the following IDL primitive types do not support initializer values: datetime, decimal, and binary.</b></p>
+
+<h3>
+<a id="attributes" class="anchor" href="#attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Attributes</h3>
+
+<p>Attributes can be placed on <code>struct</code>, <code>field</code>, <code>service</code>, and <code>method</code> definitions.</p>
+
+<pre><code>[MessageId("OperatedBy", MessageCategory = "ItineraryView"),
+ ValidateStringLength(MaxLength = 32), ValidateRequired]
+</code></pre>
+
+<p>Multiple attribute blocks can be used over a single item:</p>
+
+<pre><code>[Foo]
+[Bar]
+</code></pre>
+
+<h4>
+<a id="scopes" class="anchor" href="#scopes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Scopes</h4>
+
+<p>Attributes may be used with a scope. When a scope is defined, the attributes can be passed-through by the code generator if the scope is enabled on the babel command line.</p>
+
+<pre><code>@myScope [MyAttribute]
+</code></pre>
+
+<p>Attributes without scopes are reserved for use by babel.</p>
+
+<p><strong>Note:</strong> babel does not automatically add import statements for pass-through attributes. Thus, you will usually need to specify their full namespace:</p>
+
+<pre><code>@scope [Company.Validator.ValidateRequired]
+</code></pre>
+
+<h3>
+<a id="import" class="anchor" href="#import" aria-hidden="true"><span class="octicon octicon-link"></span></a>import</h3>
+
+<p>Use the import statement to load another IDL file into this one. Imports must occur at the top of the IDL file and are relative to the current file. Use a forward slash as a directory separation (this way it works across platforms).</p>
+
+<pre><code>import "tower/includeMe.babel"
+</code></pre>
+
+<p>Symbols must be unique across all files. While output namespaces are supported, it is assumed that all of the symbols will be unique across those namespaces.</p>
+
+<h3>
+<a id="default-namespace" class="anchor" href="#default-namespace" aria-hidden="true"><span class="octicon octicon-link"></span></a>Default namespace</h3>
+
+<p>A default namespace is used to avoid specifying it for all languages. <em>The default namespace is required</em> and is written like a URL. Examples:</p>
+
+<pre><code>namespace company.com/Tower/Babel
+namespace company.co.uk/Tower/Babel
+</code></pre>
+
+<p>This maps to different languages as shown in the following example.</p>
+
+<table>
+<thead><tr>
+<th>Language</th>
+<th>Result</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>java</td>
+<td>com.company.tower.babel</td>
+</tr>
+<tr>
+<td>csharp</td>
+<td>Company.Tower.Babel</td>
+</tr>
+<tr>
+<td>asp</td>
+<td>TowerBabel</td>
+</tr>
+<tr>
+<td>python</td>
+<td>TowerBabel</td>
+</tr>
+<tr>
+<td>ruby</td>
+<td>TowerBabel</td>
+</tr>
+<tr>
+<td>ios</td>
+<td>BAB</td>
+</tr>
+<tr>
+<td>php</td>
+<td>TowerBabel</td>
+</tr>
+<tr>
+<td>javascript</td>
+<td>TowerBabel</td>
+</tr>
+<tr>
+<td>go</td>
+<td>company/tower/babel</td>
+</tr>
+</tbody>
+</table>
+
+<h3>
+<a id="language-specific-namespace" class="anchor" href="#language-specific-namespace" aria-hidden="true"><span class="octicon octicon-link"></span></a>Language-specific namespace</h3>
+
+<p>The <code>namespace</code> statement is used to define the namespace for a given language (see supported languages above).</p>
+
+<pre><code>namespace csharp "Company.Tower"
+</code></pre>
+
+<p>Babel doesn't validate these. In fact, babel assumes that all of the symbols that are defined are unique across all included files.</p>
+
+<h3>
+<a id="enum" class="anchor" href="#enum" aria-hidden="true"><span class="octicon octicon-link"></span></a>enum</h3>
+
+<p>Enumerated types may be defined with their associated values.</p>
+
+<pre><code>/// Enumeration of supported languages
+enum Languages {
+    ENGLISH = 1,
+    GERMAN = 2
+}
+</code></pre>
+
+<p>Enumerated types must specify their integer values and cannot reference other enums or constants.</p>
+
+<p>Enumerations can be used as initializers for enum fields and parameters.</p>
+
+<h3>
+<a id="const" class="anchor" href="#const" aria-hidden="true"><span class="octicon octicon-link"></span></a>const</h3>
+
+<p>Constants can be defined for chars, integers, doubles, booleans, and strings. Constants must be unique within their declaration block.</p>
+
+<pre><code>/// Miscellaneous Constants
+const Misc {
+    COUNT = 50;
+    PI = 3.14159;
+    Email = "someone@company.com";
+    EmailValid = false;
+}
+</code></pre>
+
+<p>Constants can be used to initialize fields and parameters, provided that the data type matches.
+<code>All decimal constant values become datatype of double, so you can only use these constants to initialize fields of type double.</code></p>
+
+<h3>
+<a id="struct" class="anchor" href="#struct" aria-hidden="true"><span class="octicon octicon-link"></span></a>struct</h3>
+
+<p>A structure defines the fields that will be transmitted in web services calls. Fields may have primitive data types or be other structures.</p>
+
+<p>Structures and fields within them both support docmentation comments and attributes.</p>
+
+<pre><code>/// Documentation comment for Bar
+[MessageCategory("Travel")]
+struct Bar {
+    datetime C
+    /// D is for David
+    /// Or so you would think
+    [SomeAttribute()]
+    list&lt;Bar&gt; D;
+    [ValidateRequired, ValidateRegularExpression(Pattern = "[A-Za-z0-9]{2,2}")]
+    string XXX = "foo"
+    /** YYY is funny */
+    [ValidateStringLength(MaxLength = 32),
+    ValidateRequired]
+    string YYY
+    [Lang(ID="ok")]
+    Info E
+    Foo State = Foo.OFF
+    Foo2 Name
+    list&lt;string&gt; F
+    map&lt;int32,string&gt; X
+    map&lt;int32,Info&gt; Y
+    map&lt;string,list&lt;Info&gt;&gt; Z
+    int32 SomeInt
+}
+</code></pre>
+
+<p>Structures may be defined as <code>abstract</code>. See below for more information.</p>
+
+<h4>
+<a id="composing-data-structures" class="anchor" href="#composing-data-structures" aria-hidden="true"><span class="octicon octicon-link"></span></a>Composing Data Structures</h4>
+
+<p>Structures can be composed by extending other structures, so that they have all of the base fields. This is done with the <code>extends</code> keyword.</p>
+
+<pre><code>abstract struct Bar {
+    // fields
+}
+
+struct Foo extends Bar {
+    // fields
+}
+</code></pre>
+
+<p>Object composition is different from a traditional object-oriented language in several ways. Babel is designed to create <em>data transfer objects</em> for passing data around web services. It's not an object-oriented format per se - instead it is focused on easily composing your data. That being said, it does generate a class hierarchy in most languages that support it.</p>
+
+<p>Key differences you will note:</p>
+
+<ul>
+<li>Unlike OO languages, polymorphism is <strong>not</strong> supported. Thus, <code>list&lt;Bar&gt;</code> will never have a <code>Foo</code> object in it. This is a very important distinction.</li>
+<li>Overriding fields is <em>not</em> supported. All fields across the entire inheritance chain must be uniquely named.</li>
+<li>The is no concept of <em>virtual</em> members or anything similar.</li>
+<li>No multiple inheritance.</li>
+<li>The <code>abstract</code> keyword prevents any field from using the struct as its type. Additionally, code generators may use the keyword to generate abstract classes.</li>
+</ul>
+
+<h5>
+<a id="why-no-polymorphism" class="anchor" href="#why-no-polymorphism" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why no polymorphism?</h5>
+
+<p>Polymorphism might be supported in the future, but we felt that it adds unnessessary complexity and might even lead to bad DTO designs.</p>
+
+<ul>
+<li>JSON serializers are far more complex (and slower) when supporting polymorphism.</li>
+<li>Polymorphism is not supported by all target languages.</li>
+<li>Major, industry-proven tools like Thrift and Protocol buffers don't support it.</li>
+</ul>
+
+<p>We want to see how use of Babel evolves. While we recognize some very well-known cases like segments, the vast majority of use cases may not need it.</p>
+
+<h5>
+<a id="design-alternatives" class="anchor" href="#design-alternatives" aria-hidden="true"><span class="octicon octicon-link"></span></a>Design Alternatives</h5>
+
+<p>Since this polymorphic case <em>won't</em> work:</p>
+
+<pre><code>struct Trip {
+    list&lt;Segment&gt; Segments;
+}
+</code></pre>
+
+<p>A common alternative is:</p>
+
+<pre><code>struct Trip {
+    list&lt;AirSegment&gt; AirSegments;
+    list&lt;HotelSegment&gt; HotelSegments;
+    list&lt;CarSegment&gt; CarSegments;
+    // etc.
+}
+</code></pre>
+
+<p>This alternative is, interestingly enough, how the TripIt API works. It's a good model when you don't know who is using your service and what tools they are using.</p>
+
+<p>Please keep in mind that the client libraries generated by Babel can be used with polymorphism or "duck typing" in your code - just not in the DTO objects themselves. For instance, you could create a list of <code>Segment</code> objects and sort them in your code. They just can't go over the wire that way.</p>
+
+<p>Other alternatives involve using a single <code>Segment</code> type:</p>
+
+<pre><code>struct AirProperties {}
+struct HotelProperties {}
+struct CarProperties {}
+
+struct Segment {
+    // Common Properties
+    AirProperties Air;
+    HotelProperties Hotel;
+    CarProperties Car;
+}
+
+struct Trip {
+    list&lt;Segment&gt; Segments;
+}
+</code></pre>
+
+<h3>
+<a id="service" class="anchor" href="#service" aria-hidden="true"><span class="octicon octicon-link"></span></a>service</h3>
+
+<p>Defining a service involves listing the methods that are available on the service. The <code>service</code> definition and the methods both support documentation comments and attributes.</p>
+
+<pre><code>/** Service description */
+[Version(4.0), BasePath("/api/token/v4")]
+service TokenGenerator {
+
+    /// Get a token
+    [Http("GET", Path="/token.{format}")]
+    Foo GetToken();
+
+    /// Post a token
+    [Http("POST", Path="/token.{format}")]
+    Foo PostToken([Body] Foo token);
+
+    /// Validate a token
+    [Http("GET", Path="/token.{format}/{tokenId}")]
+    Foo ValidateToken(
+        /// token specified
+        [Path, Required] int64 tokenId,
+        /// Application
+        [Query] string application
+    )
+
+}
+</code></pre>
+
+<p>For services and methods, there are specific attributes that are used to generate the output. Methods may be declared with a <code>void</code> return type if they don't return data.</p>
+
+<h1>
+<a id="using-babel" class="anchor" href="#using-babel" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using Babel</h1>
+
+<h2>
+<a id="the-babel-binary" class="anchor" href="#the-babel-binary" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Babel Binary</h2>
+
+<h3>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h3>
+
+<p>The only required files are the babel binary and the template folder. Babel has minimal dependencies - just a few shared libraries that should already be on the operating system.</p>
+
+<p>The location of the templates folder is based on the location of the babel binary. <code>/usr/bin</code> and <code>/bin</code> locations are replaced with <code>/etc</code> - so effectively, the templates folder is located in the <code>etc</code> folder that corresponds to the <code>bin</code> folder. If the binary is not in a <code>bin</code> folder, then the templates folder is expected to be in the same folder as the binary. Some examples are shown below.</p>
+
+<table>
+<thead><tr>
+<th>babel binary location</th>
+<th>Default template folder location</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>/bin/<strong>babel</strong>
+</td>
+<td>/etc/<strong>babeltemplates</strong>
+</td>
+</tr>
+<tr>
+<td>/usr/bin/<strong>babel</strong>
+</td>
+<td>/etc/<strong>babeltemplates</strong>
+</td>
+</tr>
+<tr>
+<td>/usr/local/bin/<strong>babel</strong>
+</td>
+<td>/usr/local/etc/<strong>babeltemplates</strong>
+</td>
+</tr>
+<tr>
+<td>/usr/local/bin/company/<strong>babel</strong>
+</td>
+<td>/usr/local/etc/company/<strong>babeltemplates</strong>
+</td>
+</tr>
+<tr>
+<td>/usr/local/company/bin/<strong>babel</strong>
+</td>
+<td>/usr/local/company/etc/<strong>babeltemplates</strong>
+</td>
+</tr>
+<tr>
+<td>c:\babel\bin\<strong>babel.exe</strong>
+</td>
+<td>c:\babel\etc\<strong>babeltemplates</strong>
+</td>
+</tr>
+<tr>
+<td>c:\files\<strong>babel.exe</strong>
+</td>
+<td>c:\files\<strong>babeltemplates</strong>
+</td>
+</tr>
+<tr>
+<td>/home/michaell/<strong>babel</strong>
+</td>
+<td>/home/michaell/<strong>babeltemplates</strong>
+</td>
+</tr>
+</tbody>
+</table>
+
+<h3>
+<a id="command-line-parameters" class="anchor" href="#command-line-parameters" aria-hidden="true"><span class="octicon octicon-link"></span></a>Command-Line Parameters</h3>
+
+<table>
+<thead><tr>
+<th>Option</th>
+<th>Default</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>-templates</td>
+<td><em>babeltemplates (as shown above)</em></td>
+<td>Use to override the location of the templates folder</td>
+</tr>
+<tr>
+<td>-help</td>
+<td>false</td>
+<td>Show command help</td>
+</tr>
+<tr>
+<td>-json</td>
+<td>false</td>
+<td>Print the JSON representation of the IDL parse tree</td>
+</tr>
+<tr>
+<td>-lang</td>
+<td>csharp</td>
+<td>Generate code in the given language</td>
+</tr>
+<tr>
+<td>-output</td>
+<td>gen-lang</td>
+<td>Output folder for generated files</td>
+</tr>
+<tr>
+<td>-inc</td>
+<td>false</td>
+<td>Generate included files too</td>
+</tr>
+<tr>
+<td>-ns</td>
+<td></td>
+<td>Optionally matches files only if namespace starts with this</td>
+</tr>
+<tr>
+<td>-scopes</td>
+<td></td>
+<td>Comma-separated list of scopes to enable</td>
+</tr>
+<tr>
+<td>-options</td>
+<td></td>
+<td>Comma-separated list of key=value pairs for generator</td>
+</tr>
+<tr>
+<td>-version</td>
+<td></td>
+<td>Display the version number</td>
+</tr>
+</tbody>
+</table>
+
+<h1>
+<a id="development" class="anchor" href="#development" aria-hidden="true"><span class="octicon octicon-link"></span></a>Development</h1>
+
+<h2>
+<a id="design" class="anchor" href="#design" aria-hidden="true"><span class="octicon octicon-link"></span></a>Design</h2>
+
+<p>Babel contains a parse tree <a href="https://github.com/babelrpc/babel/blob/master/idl/idl.go">idl.go</a>, and a <a href="http://golang.org/cmd/yacc/">yacc</a>
+file <a href="https://github.com/babelrpc/babel/blob/master/parser/parseidl.y">parseidl.y</a> that implements the parser. The lexical scanner is Go's own
+<a href="http://golang.org/pkg/text/scanner/">text scanner</a> which tokenizes input for C-style
+languages.</p>
+
+<p>Output is generated using Go's <a href="http://golang.org/pkg/text/template/">template package</a>.</p>
+
+<h2>
+<a id="coding" class="anchor" href="#coding" aria-hidden="true"><span class="octicon octicon-link"></span></a>Coding</h2>
+
+<p>This project was written in <a href="http://golang.org/">Go</a>. Babel's code documentation is available via <a href="https://godoc.org/github.com/babelrpc/babel">godoc</a>.</p>
+
+      <footer class="site-footer">
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-731458-8");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
