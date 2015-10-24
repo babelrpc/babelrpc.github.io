@@ -1,3 +1,8 @@
+---
+title: FAQ
+layout: post
+---
+
 ![Babel](media/logo.png)
 
 FAQ

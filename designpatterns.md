@@ -1,3 +1,8 @@
+---
+title: Design Patterns
+layout: post
+---
+
 ![Babel](media/logo.png)
 
 Design Patterns

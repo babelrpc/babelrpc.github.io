@@ -1,3 +1,8 @@
+---
+title: Babel's JSON Serialization
+layout: post
+---
+
 ![Babel](media/logo.png)
 
 About JSON Serialization

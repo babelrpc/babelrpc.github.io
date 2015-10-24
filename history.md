@@ -1,3 +1,8 @@
+---
+title: Revision History
+layout: post
+---
+
 ![Babel](media/logo.png)
 
 Revision History

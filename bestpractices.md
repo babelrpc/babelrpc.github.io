@@ -1,3 +1,8 @@
+---
+title: Best Practices
+layout: post
+---
+
 ![Babel](media/logo.png)
 
 Best Practices

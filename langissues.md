@@ -1,3 +1,8 @@
+---
+title: Language-Specific Issues
+layout: post
+---
+
 ![Babel](media/logo.png)
 
 Language Issues
