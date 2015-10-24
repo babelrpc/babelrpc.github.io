@@ -8,16 +8,16 @@ layout: post
 Babel is an IDL parser and RPC framework using JSON over HTTP. IDL files describe models and web services. The `babel` tool allows you to generate client and server code in multiple languages from the IDL file.
 
 * [Babel RPC Home](http://babelrpc.io/)
-* [FAQs](FAQ.md)
-* [Best Practices](bestpractices.md)
-* [Design Patterns](designpatterns.md)
-* [JSON Serialization Notes](JSON.md)
-* [Release Notes](history.md)
+* [FAQs](FAQ)
+* [Best Practices](bestpractices)
+* [Design Patterns](designpatterns)
+* [JSON Serialization Notes](JSON)
+* [Release Notes](history)
 
 Best Practrices
 ---------------
 
-Please look over the [best practices guide](bestpractices.md) once you are familiar with Babel. Also check out the [design patterns](designpatterns.md).
+Please look over the [best practices guide](bestpractices) once you are familiar with Babel. Also check out the [design patterns](designpatterns).
 
 Supported Languages
 -------------------
@@ -98,7 +98,7 @@ Primitive types are generally nullable (i.e. optional). Initializers may be used
 
 Finaly, the `binary` type is used to represent binary data stored in byte arrays. It serializes more efficiently than a list of bytes.
 
-(Also see [Language-Specific Issues](langissues.md) and [About JSON](JSON.md).)
+(Also see [Language-Specific Issues](langissues) and [About JSON](JSON).)
 
 #### Containers
 

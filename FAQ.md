@@ -174,11 +174,11 @@ Headers should usually not be used to transmit required components of the messag
 
 ### Where can I learn more about versioning?
 
-The [best practices guide](bestpractices.md) discusses versioning issues in depth. It's worth a read.
+The [best practices guide](bestpractices) discusses versioning issues in depth. It's worth a read.
 
 ### Should I create request and response wrappers for all my service methods?
 
-The [best practices guide](bestpractices.md) discusses response and request wrappers.
+The [best practices guide](bestpractices) discusses response and request wrappers.
 
 "Wrapper structs" make sense when you have a number of parameters to pass, and expect to be adding to it continually. For example, _search parameters_ could include a variety of things, and it's likely that you'll add more. Rather than introducing new methods or changing a method signature, it's cleaner to use a `struct`.
 
@@ -188,7 +188,7 @@ Response wrappers are often a good idea. Often, we want to add information to da
 
 ### Why doesn't polymorphism work?
 
-The main [Babel documentation](babel.md) discusses it at length. Basically, Polymorphism is not supported by all languages and is difficult to implement in JSON. It's also not present in other toolkits like Thrift or Protocol Buffers - we learned from others. There are a handful of cases where it seems like polymorphism is a good thing, but generally exposing that much of your service implementation details probably causes lock-in that you don't want.
+The main [Babel documentation](babel) discusses it at length. Basically, Polymorphism is not supported by all languages and is difficult to implement in JSON. It's also not present in other toolkits like Thrift or Protocol Buffers - we learned from others. There are a handful of cases where it seems like polymorphism is a good thing, but generally exposing that much of your service implementation details probably causes lock-in that you don't want.
 
 ### Can I use inheritance?
 
