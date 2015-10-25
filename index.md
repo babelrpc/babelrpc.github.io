@@ -66,5 +66,5 @@ In addition to supporting multiple languages, Babel runs on Linux, Mac, and Wind
 
 * [Documentation](/babel.html) - learn about the Babel software
 * [Frequently Asked Questions](/FAQ.html) - get answers to common questions
-* [Best Practices](/bestpractices,html) - understand how make the most of Babel
+* [Best Practices](/bestpractices.html) - understand how make the most of Babel
 * [Design Patterns](/designpatterns.html) - learn how to solve service design problems
