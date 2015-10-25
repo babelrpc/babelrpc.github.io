@@ -1,6 +1,7 @@
 ---
 title: JSON Notes
 layout: post
+sortBy: 6
 ---
 
 Babel's default protocol is JSON. JSON maps nicely to data structures in a variety of languages.

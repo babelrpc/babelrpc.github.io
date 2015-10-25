@@ -1,6 +1,7 @@
 ---
 title: Design Patterns
 layout: post
+sortBy: 5
 ---
 
 Here are a few design patterns for Babel web services.

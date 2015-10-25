@@ -1,6 +1,7 @@
 ---
 title: Revision History
 layout: post
+sortBy: 8
 ---
 
 Version 1 Features

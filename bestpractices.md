@@ -1,6 +1,7 @@
 ---
 title: Best Practices
 layout: post
+sortBy: 3
 ---
 
 We aim to provide robust web services that are:
