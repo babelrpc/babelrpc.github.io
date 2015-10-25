@@ -9,7 +9,7 @@ Babel is a tool for defining web service interfaces in a compact way and generat
 
 ## Why Babel?
 
-It takes a serious effort to product great web services.
+It takes a serious effort to produce great web services.
 
 * Documenting services is challenging.
 * Services often use different styles - SOAP, plain XML, RESTish, etc.
@@ -64,7 +64,7 @@ In addition to supporting multiple languages, Babel runs on Linux, Mac, and Wind
 
 ## Babel Documentation
 
-[Documentation](/babel.html) - learn about the Babel software
-[Frequently Asked Questions](/FAQ.html) - get answers to common questions
-[Best Practices](/bestpractices,html) - understand how make the most of Babel
-[Design Patterns](/designpatterns.html) - learn how to solve service design problems
+* [Documentation](/babel.html) - learn about the Babel software
+* [Frequently Asked Questions](/FAQ.html) - get answers to common questions
+* [Best Practices](/bestpractices,html) - understand how make the most of Babel
+* [Design Patterns](/designpatterns.html) - learn how to solve service design problems
