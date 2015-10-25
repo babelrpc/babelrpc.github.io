@@ -19,6 +19,7 @@ Here are a few design patterns for Babel web services.
 
 
 <a name="callouts"></a>
+
 ## Callouts
 
 A _callout_ is sort of a reverse-service. Normally, a service designer creates the Babel file that defines the service data and endpoints.
@@ -65,6 +66,7 @@ Note that the implementation of `GetVersion` simply returns `CalloutInfo.VERSION
 
 
 <a name="clientasync"></a>
+
 ## Client-based Asynchronous Processing
 
 In some languages the Babel client supports asynchronous versions of service methods. These methods allow you to do other processing during the HTTP request to the Babel service. So rather than calling:
@@ -82,6 +84,7 @@ It should be noted that the specifics of the implementation are language-depende
 
 
 <a name="factory"></a>
+
 ## Client Factory
 
 To centralize configuration and setup we recommend creating client factories. For this simple service:
@@ -131,6 +134,7 @@ In some cases you might want to totally encapsulate the use of the client inside
 
 
 <a name="sendforget"></a>
+
 ## Send and Forget
 
 A send-and-forget service implements a method that returns immediately after laucnhing a thread to do the processing. The client will receive no confirmation that the processing was successful.
@@ -148,6 +152,7 @@ The client doesn't see any difference except that failure to correctly perform t
 
 
 <a name="polling"></a>
+
 ## Asynchronous with Polling
 
 Sometimes we want to multitask while waiting for a response. A simple way to achieve this is with a non-blocking send and polling response.
@@ -175,6 +180,7 @@ Polling too frequently can impact system performance.
 
 
 <a name="pingpong"></a>
+
 ## Ping-Pong (Asynchronous with Notification)
 
 Ping-pong is a normal service call combined with a callback. It can be used for asynchronous processing with a notification when complete. It consists of two service contracts.
@@ -201,6 +207,7 @@ When using this design, the client should remain stable even if the processing s
 
 
 <a name="proxy"></a>
+
 ## Proxy
 
 A proxy service simply forwards the request to another service. It does so by implementing the service's interface and forwarding the request to the original service.
@@ -226,6 +233,7 @@ Note that you should choose a header name that is consistent with your project a
 
 
 <a name="wrapper"></a>
+
 ## Proxy Wrapper for Asynchronous Conversion
 
 If your client code can't support asynchronous processing, you can create a proxy to wrap up a service and make it asynchronous. If the original service implements:
@@ -253,6 +261,7 @@ It's far easier to use a client that supports asynchronous use directly, or impl
 
 
 <a name="callyourself"></a>
+
 ## Calling Yourself
 
 The _service object_ model allows your service implementation to be abstracted away from the web framework. Thus, you can instantiate your service objects and call them directly using the models generated with Babel.
@@ -266,6 +275,7 @@ Calling your own objects is useful in situations where you want to compose a ser
 
 
 <a name="headers"></a>
+
 ## Using Headers in a Service Object
 
 The interface for a service object doesn't include headers. To use headers, you need to make them available to the service object.
