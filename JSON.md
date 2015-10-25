@@ -1,5 +1,5 @@
 ---
-title: Babel's JSON Serialization
+title: JSON Notes
 layout: post
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: Language-Specific Issues
+title: Language Issues
 layout: post
 ---
 
