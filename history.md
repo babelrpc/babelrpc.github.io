@@ -1,12 +1,8 @@
 ---
+permalink: /history
 title: Revision History
 layout: post
 ---
-
-![Babel](media/logo.png)
-
-Revision History
-================
 
 Version 1 Features
 ------------------

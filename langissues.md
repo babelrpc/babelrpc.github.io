@@ -1,12 +1,8 @@
 ---
+permalink: /langissues
 title: Language-Specific Issues
 layout: post
 ---
-
-![Babel](media/logo.png)
-
-Language Issues
-===============
 
 Language        | Unsigned Types | Byte Type        | Decimal Type
 ----------------|----------------|------------------|-------------

@@ -1,9 +1,8 @@
 ---
+permalink: /babel
 title: Babel
 layout: post
 ---
-
-![Babel](media/logo.png)
 
 Babel is an IDL parser and RPC framework using JSON over HTTP. IDL files describe models and web services. The `babel` tool allows you to generate client and server code in multiple languages from the IDL file.
 

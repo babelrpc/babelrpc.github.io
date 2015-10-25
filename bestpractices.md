@@ -1,12 +1,8 @@
 ---
+permalink: /bestpractices
 title: Best Practices
 layout: post
 ---
-
-![Babel](media/logo.png)
-
-Best Practices
-==============
 
 We aim to provide robust web services that are:
 

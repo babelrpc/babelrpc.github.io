@@ -1,12 +1,8 @@
 ---
+permalink: /designpatterns
 title: Design Patterns
 layout: post
 ---
-
-![Babel](media/logo.png)
-
-Design Patterns
-===============
 
 Here are a few design patterns for Babel web services.
 

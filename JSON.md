@@ -1,12 +1,8 @@
 ---
+permalink: /JSON
 title: Babel's JSON Serialization
 layout: post
 ---
-
-![Babel](media/logo.png)
-
-About JSON Serialization
-========================
 
 Babel's default protocol is JSON. JSON maps nicely to data structures in a variety of languages.
 
