@@ -1,5 +1,4 @@
 ---
-permalink: /designpatterns
 title: Design Patterns
 layout: post
 ---

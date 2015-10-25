@@ -1,5 +1,4 @@
 ---
-permalink: /babel
 title: Babel
 layout: post
 ---
@@ -16,7 +15,7 @@ Babel is an IDL parser and RPC framework using JSON over HTTP. IDL files describ
 Best Practrices
 ---------------
 
-Please look over the [best practices guide](bestpractices) once you are familiar with Babel. Also check out the [design patterns](designpatterns).
+Please look over the [best practices guide](bestpractices.html) once you are familiar with Babel. Also check out the [design patterns](designpatterns.html).
 
 Supported Languages
 -------------------
@@ -97,7 +96,7 @@ Primitive types are generally nullable (i.e. optional). Initializers may be used
 
 Finaly, the `binary` type is used to represent binary data stored in byte arrays. It serializes more efficiently than a list of bytes.
 
-(Also see [Language-Specific Issues](langissues) and [About JSON](JSON).)
+(Also see [Language-Specific Issues](langissues.html) and [About JSON](JSON.html).)
 
 #### Containers
 

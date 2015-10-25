@@ -1,5 +1,4 @@
 ---
-permalink: /history
 title: Revision History
 layout: post
 ---

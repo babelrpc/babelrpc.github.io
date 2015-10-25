@@ -1,5 +1,4 @@
 ---
-permalink: /langissues
 title: Language-Specific Issues
 layout: post
 ---

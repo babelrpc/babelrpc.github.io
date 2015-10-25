@@ -1,5 +1,4 @@
 ---
-permalink: /bestpractices
 title: Best Practices
 layout: post
 ---

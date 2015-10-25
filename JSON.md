@@ -1,5 +1,4 @@
 ---
-permalink: /JSON
 title: Babel's JSON Serialization
 layout: post
 ---
