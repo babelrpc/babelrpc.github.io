@@ -1,11 +1,9 @@
-<nav class="nav-primary" role="navigation" >
-    <ul>
+    <div class="container">
+      <div class="row">
         {% for p in site.pages %}
         {% if p.url != "/404.html" %}
-        <li class="btn">
-        	<a {% if p.url == page.url %}class="active"{% endif %} href="{{ site.baseurl }}{{ p.url }}">{{ p.title }}</a>
-        </li>
+        <div class="col-xs-1"><a href="{{ site.baseurl }}{{ p.url }}">{{ p.title }}</a></div>
         {% endif %}
         {% endfor %}
-    </ul>
-</nav>
+      </div>
+    </div>
