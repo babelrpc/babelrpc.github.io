@@ -6,13 +6,6 @@ sortBy: 2
 
 Babel is an IDL parser and RPC framework using JSON over HTTP. IDL files describe models and web services. The `babel` tool allows you to generate client and server code in multiple languages from the IDL file.
 
-* [Babel RPC Home](http://babelrpc.io/)
-* [FAQs](FAQ)
-* [Best Practices](bestpractices)
-* [Design Patterns](designpatterns)
-* [JSON Serialization Notes](JSON)
-* [Release Notes](history)
-
 Best Practrices
 ---------------
 
