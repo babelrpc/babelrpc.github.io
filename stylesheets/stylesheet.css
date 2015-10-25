@@ -243,3 +243,17 @@ a {
 @media screen and (max-width: 42em) {
   .site-footer {
     font-size: 0.9rem; } }
+
+.nav-primary {
+  float: left;
+  position: relative;
+  display: block;
+  background-color: #159957;
+  overflow: hidden;
+}
+
+@media (min-width: 40em) {
+.nav-primary {
+    width: 30%;
+    }
+}

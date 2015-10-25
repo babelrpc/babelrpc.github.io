@@ -1,5 +1,5 @@
 ---
-title: Babel
+title: Using Babel
 layout: post
 ---
 
