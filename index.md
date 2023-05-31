@@ -5,6 +5,8 @@ layout: post
 sortBy: 1
 ---
 
+> We are archiving the project because there are other great alternatives that are better maintained, like gRPC.
+
 Babel is a tool for defining web service interfaces in a compact way and generating client and server code in multiple programming languages. It helps produce consistent, discoverable, and easy to consume web services.
 
 ## Why Babel?
